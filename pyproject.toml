@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ajax-crud"
+version = "0.1.0"
+description = ""
+authors = ["V-U-Simon <V-U-Simon@yandex.ru>"]
+readme = "README.md"
+packages = [{ include = "ajax_crud" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^4.2.3"
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
+autoflake = "^2.2.0"
+djlint = "^1.32.1"
+yapf = "^0.40.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
