@@ -2,120 +2,12 @@
 {% block content %}
     <div class="container-fluid vh-100">
         <div class="row h-50">
-            <div class="col centered-content">
-                <!-- Место для создания задачи -->
-                <div class="card h-75 w-100">
-                    <div class="card-header">
-                        <h2>Create Task</h2>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <input type="text"
-                                       class="form-control"
-                                       id="task-name"
-                                       placeholder="Enter task name">
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="task-completed">
-                                <label class="form-check-label" for="task-completed">Completed</label>
-                            </div>
-                            <button type="submit" class="btn btn-success">Create</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col centered-content">
-                <!-- Место для обновления задачи -->
-                <div class="card h-75 w-100">
-                    <div class="card-header">
-                        <h2>Update Task</h2>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <input type="text"
-                                       class="form-control"
-                                       id="task-id"
-                                       placeholder="Enter task ID">
-                            </div>
-                            <div class="mb-3">
-                                <input type="text"
-                                       class="form-control"
-                                       id="update-task-name"
-                                       placeholder="Enter task name">
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="update-task-completed">
-                                <label class="form-check-label" for="update-task-completed">Completed</label>
-                            </div>
-                            <button type="submit" class="btn btn-warning">Update</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            {% include 'todo_crud_app/include/create_task.html' %}
+            {% include 'todo_crud_app/include/update_task.html' %}
         </div>
         <div class="row h-50">
-            <div class="col centered-content">
-                <!-- Место для удаления задачи -->
-                <div class="card h-75 w-100">
-                    <div class="card-header">
-                        <h2>Delete Task</h2>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="mb-3">
-                                <input type="text"
-                                       class="form-control"
-                                       id="delete-task-id"
-                                       placeholder="Enter task ID">
-                            </div>
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col centered-content">
-                <!-- Место для списка задач -->
-                <div class="card h-75 w-100">
-                    <div class="card-header">
-                        <h2>Task List</h2>
-                    </div>
-                    <div class="card-body task-list">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <input class="form-check-input me-1"
-                                       type="checkbox"
-                                       value=""
-                                       aria-label="..."
-                                       checked
-                                       disabled>
-                                Task 1
-                            </li>
-                            <li class="list-group-item">
-                                <input class="form-check-input me-1"
-                                       type="checkbox"
-                                       value=""
-                                       aria-label="..."
-                                       disabled>
-                                Task 2
-                            </li>
-                            <li class="list-group-item">
-                                <input class="form-check-input me-1"
-                                       type="checkbox"
-                                       value=""
-                                       aria-label="..."
-                                       checked
-                                       disabled>
-                                Task 3
-                            </li>
-                        </ul>
-                        <div class="text-start">
-                            <button class="btn btn-primary mt-3">Refresh</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% include 'todo_crud_app/include/delete_task.html' %}
+            {% include 'todo_crud_app/include/list_task.html' %}
         </div>
     </div>
 {% endblock content %}
