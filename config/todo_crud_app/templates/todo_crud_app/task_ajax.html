@@ -12,5 +12,35 @@
     </div>
 {% endblock content %}
 {% block javascript %}
-    <!-- your HTML content -->
+    {{ block.super }}
+    <script>
+        "use strict";
+
+
+        document.getElementById('getListBtn').addEventListener("click", () => getAllTask(event, "{% url 'task:tasks' %}") )
+
+        function getAllTask(event, url) {
+            fetch(url, {
+                method: 'GET', 
+            	headers: { 'Content-Type': 'application/json' } ,
+            })
+            .then(response => response.json())
+            .then(data => {
+                const taskList = document.getElementById('todoList')
+                taskList.innerHTML = "";
+
+                data.context.forEach( task => {
+                    taskList.innerHTML += `
+                    <li class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="" aria-label="..." ${ task.completed ? 'checked' : ''} disabled>
+                        ${task.title}
+                    </li>`
+                })
+
+            })
+            
+        }
+        
+
+    </script>
 {% endblock javascript %}
