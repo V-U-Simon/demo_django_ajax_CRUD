@@ -5,7 +5,7 @@ from django.contrib import admin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('todo_crud_app.urls', namespace='crud')),
+    path('', include('todo_crud_app.urls', namespace='task')),
 ]
 
 if settings.DEBUG:

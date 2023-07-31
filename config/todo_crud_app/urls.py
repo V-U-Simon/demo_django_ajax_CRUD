@@ -5,5 +5,5 @@ from . import views
 app_name = TodoCrudAppConfig.name
 
 urlpatterns = [
-    path('', views.TaskListView.as_view(), name='task_list'),
+    path('', views.TaskView.as_view(), name='ajax_crud'),
 ]
