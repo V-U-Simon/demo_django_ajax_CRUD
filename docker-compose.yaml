@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  django-app-todo:
+    container_name: django-app-todo
+    build:
+      context: ./todo_app
+      dockerfile: Dockerfile
+    volumes:
+      - ./todo_app:/app
+      - /app/.venv
+    ports:
+      - 8000:8000

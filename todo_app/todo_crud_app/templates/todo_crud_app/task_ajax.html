@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container-fluid vh-100">
+        <div class="row h-50">
+            {% include 'todo_crud_app/include/create_task.html' %}
+            {% include 'todo_crud_app/include/update_task.html' %}
+        </div>
+        <div class="row h-50">
+            {% include 'todo_crud_app/include/delete_task.html' %}
+            {% include 'todo_crud_app/include/list_task.html' %}
+        </div>
+    </div>
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    <script>
+        "use strict";
+
+        const url = "{% url 'task:tasks' %}"
+        document.addEventListener("DOMContentLoaded", () => getTask(event, url));
+        document.getElementById('btnGET').addEventListener("click", () => getTask(event, url) )
+        document.getElementById('btnPOST').addEventListener("click", () => postTask(event, url) )
+        document.getElementById('btnDELETE').addEventListener("click", () => deleteTask(event, url) )
+        document.getElementById('btnPUT').addEventListener("click", () => putTask(event, url) )
+
+        function getTask(event, url) {
+            event.preventDefault();           
+            
+            fetch(url, {
+                method: 'GET', 
+            	headers: { 'Content-Type': 'application/json' } ,
+            })
+            .then(response => response.json())
+            .then(data => {
+                const taskList = document.getElementById('todoList')
+                taskList.innerHTML = "";
+
+                data.context.forEach( task => {
+                    taskList.innerHTML += `
+                    <li class="list-group-item">
+                        <p>
+                            <input class="form-check-input me-1" type="checkbox" value="" aria-label="..." ${ task.completed ? 'checked' : ''} disabled>
+                            ${task.title}
+                            <span class="small text-muted">(id: ${task.id})</span> 
+                        </p>
+                    </li>`
+                })
+            })
+        }
+        
+        function postTask(event, url) {
+            event.preventDefault();
+
+            const formData = new FormData(document.getElementById('post-form'))
+
+            const request = new Request(url, {
+                method: 'POST',
+                mode: 'same-origin',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+                body: JSON.stringify({
+                    title: formData.get('title'),
+                    completed: formData.get('completed'),
+                })
+            });
+            
+            fetch(request)
+            .then(response => response.json())
+            .then(data => console.log(data))            
+            .then(() => getTask(event, url)) // update tasks
+        }
+        
+        function deleteTask(event, url) {
+            event.preventDefault();
+
+            const formData = new FormData(document.getElementById('delete-form'))
+
+            const request = new Request(url, {
+                method: 'DELETE',
+                mode: 'same-origin',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+                body: JSON.stringify({
+                    taskId: formData.get('taskId'),
+                })
+            });
+            
+            fetch(request)
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .then(() => getTask(event, url)) // update tasks 
+        }
+        function putTask(event, url) {
+            event.preventDefault();
+
+            const formData = new FormData(document.getElementById('put-form'))
+
+            const request = new Request(url, {
+                method: 'PUT',
+                mode: 'same-origin',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "X-CSRFToken": getCookie("csrftoken"),
+                },
+                body: JSON.stringify({
+                    taskId: formData.get('taskId'),
+                    title: formData.get('title'),
+                    completed: formData.get('completed'),
+                })
+            });
+            
+            fetch(request)
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .then(() => getTask(event, url)) // update tasks 
+        }
+
+    </script>
+{% endblock javascript %}
